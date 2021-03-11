@@ -1,5 +1,5 @@
 "use strict";
-//const { ObjectId } = require('mongodb');
+
 const DbMixin = require("../mixins/db.mixin");
 const AuthenticationMixin = require("../mixins/authentication.mixin");
 const AuthHelper = require("../common/auth.helper")
@@ -8,13 +8,13 @@ const AuthHelper = require("../common/auth.helper")
  */
 
 module.exports = {
-	name: "issues",
+	name: "references",
 	// version: 1
 
 	/**
 	 * Mixins
 	 */
-	mixins: [DbMixin("issues"), AuthenticationMixin],
+	mixins: [DbMixin("references"), AuthenticationMixin],
 
 	/**
 	 * Settings
@@ -23,49 +23,20 @@ module.exports = {
 		// Available fields in the responses
 		fields: [
 			"_id",
-			"name",
-			"tags",
-			"type",
-			"who",
-			"what",
-			"when",
-			"where",
-			"why",
-			"how",
-			"location",
-			"state",
-			"province",
-			"city",
-			"township",
-			"address",
-			"status",
-			"serverity",
-			"creator",
-			"approver",
-			"createdAt"
+			"title",
+            "type",
+            "url",
+            "createdAt",
+            "issueID"
 		],
 
 		// Validator for the `create` & `insert` actions.
 		entityValidator: {
-			name: "string|min:3",
-			tags: "string|min:3",
-			type: "string|min:3",
-			// creator: "objectID",
-			createdAt: "date",
-			/*who: "string|min:3",
-			what: "string|min:3",
-			when: "date",
-			where: "string|min:3",
-			why: "string|min:3",
-			how: "string|min:3",
-			location:"any",
-			state:"string|min:3",
-			province:"string|min:3",
-			city:"string|min:3",
-			township:"string|min:3",
-			address:"string|min:3",*/
-			status: "string|min:3",
-			serverity: "number|integer|positive"
+            issueID: "objectID",
+			title: "string|min:3",
+            type: "string|min:3",
+            createdAt: "date",
+            url:"string|min:3",
 		}
 	},
 
@@ -73,7 +44,6 @@ module.exports = {
 	 * Action Hooks
 	 */
 	hooks: {
-
 		before: {
 			/**
 			 * Register a before hook for the `create` action.
@@ -81,8 +51,7 @@ module.exports = {
 			 *
 			 * @param {Context} ctx
 			 */
-
-			create: [
+			 create: [
 				"authenticate",
 				function (ctx) {
 					ctx.params.createdAt = new Date();
@@ -108,7 +77,7 @@ module.exports = {
 				}
 			]
 
-		},
+		}
 	},
 
 	/**
@@ -128,24 +97,20 @@ module.exports = {
 
 		// --- ADDITIONAL ACTIONS ---
 
-
+		
 	},
 
 	/**
 	 * Methods
 	 */
 	methods: {
-
+		
 	},
 
 	/**
 	 * Fired after database connection establishing.
 	 */
 	async afterConnected() {
-
-		if (this.adapter.collection) {
-			await this.adapter.collection.createIndex({ name: 1 });
-		}
-		// await this.adapter.collection.createIndex({ name: 1 });
+      
 	}
 };
