@@ -29,7 +29,9 @@ module.exports = {
 				path: "/api",
 
 				whitelist: [
+					"$node.*",
 					"auth.login",
+					"auth.passwordChange",
 					"issues.*",
 					"accounts.*",
 					"references.*",
@@ -53,6 +55,7 @@ module.exports = {
 
 				aliases: {
 					"login": "auth.login",
+					"password/change": "auth.passwordChange",
 				},
 
 				/** 

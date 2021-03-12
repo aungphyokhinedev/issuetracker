@@ -1,13 +1,16 @@
 "use strict";
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
+const Values =  require("../common/values")
 const ApiGateway = require("moleculer-web");
+const AuthenticationMixin = require("../mixins/authentication.mixin");
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
 
 module.exports = {
 	name: "auth",
+	mixins: [AuthenticationMixin],
 
 	/**
 	 * Settings
@@ -15,7 +18,14 @@ module.exports = {
 	settings: {
 
 	},
+	hooks: {
 
+		before: {
+			passwordChange:[
+				"authenticate"
+			]
+		}
+	},
 	/**
 	 * Dependencies
 	 */
@@ -26,10 +36,6 @@ module.exports = {
 	 */
 	actions: {
         sign: {
-            rest: {
-				method: "GET",
-				path: "/sign"
-			},
 			params: {
 				data: "object",
 			},
@@ -39,10 +45,6 @@ module.exports = {
 			}
 		},
 		verify: {
-            rest: {
-				method: "GET",
-				path: "/verify"
-			},
 			params: {
 				token: "string",
 			},
@@ -72,6 +74,10 @@ module.exports = {
 				
 					const validate = await ctx.call("crypto.validate",{data:ctx.params.password, cipher: account.password});
 					if(validate){
+						if(account.status === Values.account.status.blocked) throw new ApiGateway.Errors.UnAuthorizedError("ACCOUNT_BLOCKED");
+						if(account.status === Values.account.status.locked) throw new ApiGateway.Errors.UnAuthorizedError("ACCOUNT_LOCKED");
+
+
 						const token =  await ctx.call("auth.sign", { data: {id: account._id,time: new Date()} });
 						this.setLogin(ctx, account);
 						return {
@@ -90,7 +96,23 @@ module.exports = {
 				
 			}
 		},
-		
+		passwordChange: {
+			params: {
+				password: "string",
+				new: "string",
+				confirm: "string",
+			},
+			async handler(ctx) {
+				if(ctx.params.new !== ctx.params.confirm) throw new ApiGateway.Errors.UnAuthorizedError("PASSWORD_NOT_MATCH");
+
+				//hashing password
+				const hashed = await ctx.call("crypto.hash", { data: ctx.params.new, saltRounds: 5 });
+				const update = await ctx.call("accounts.update",{
+					id: ctx.meta.account._id, password: hashed
+				})
+				
+			}
+		},
 	},
 
 	/**

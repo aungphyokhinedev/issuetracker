@@ -1,4 +1,5 @@
 {"email":"user01@tracker.com","role":"user","password":"$2a$05$XUbG2B5hI4ftwWdKz7i1huzOOcm0mqYyx1smXLdo9cttdGYpJyrKK","createdAt":{"$$date":1615421795526},"status":"active","_id":"6IQpLmoT9YupMvPq"}
 {"email":"super-admin@tracker.com","role":"super-admin","password":"$2a$05$/w26lSF2SmGop27.x4Hl6Oo9cJy2jRqLrYiPN0jvwcC.hYD4Tf4ma","createdAt":{"$$date":1615345835852},"status":"active","_id":"BdoGPpiZ6S2PzbLD","lastLoggedInDate":1615414392297}
 {"email":"admin@tracker.com","role":"admin","password":"$2a$05$DHsVrBhfh/8ow88JZra1weH2FppEXVR3qen4PZ2vQNBtxv0xW0qRC","createdAt":{"$$date":1615421762384},"status":"active","_id":"Fuc58hsoOdbcsXiE"}
-{"email":"user02@tracker.com","role":"user","password":"$2a$05$DoS6OhThpVnFLNXpEMGpr.tQLsXzRDRYErjopoBBo3iapVQALpahe","createdAt":{"$$date":1615421805290},"status":"active","_id":"Q0HRiOX0bBbsjifX","lastLoggedInDate":1615422095653}
+{"email":"user02@tracker.com","role":"user","password":"$2a$05$jCDMAv7KfBSKmXwpAkfS5uKBvr1wvU7kYAywplVAVSOt761GL1lTO","createdAt":{"$$date":1615421805290},"status":"BLOCKED","_id":"Q0HRiOX0bBbsjifX","lastLoggedInDate":1615512950954}
+{"email":"user03@tracker.com","role":"user","password":"$2a$05$CwEi9oRmyWfXhbNsqUDE1Oo4roJjhYtDFPW5WIJXSjngvQmd3NpUm","createdAt":{"$$date":1615502230308},"status":"ACTIVE","_id":"TaL8oN8wfWV6xTIk"}

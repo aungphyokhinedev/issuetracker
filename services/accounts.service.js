@@ -1,5 +1,6 @@
 "use strict";
 
+const Values = require("../common/values");
 const DbMixin = require("../mixins/db.mixin");
 const ApiGateway = require("moleculer-web");
 const AuthenticationMixin =  require("../mixins/authentication.mixin");
@@ -28,6 +29,7 @@ module.exports = {
             "photo",
             "description",
 			"password",
+			"status",
             "createdAt",
 			"lastLoggedInDate"
 		],
@@ -57,11 +59,11 @@ module.exports = {
                 ctx.params.createdAt = new Date();
 				
 				//hashing password
-				const password = await ctx.call("crypto.hash", { data: ctx.params.password, saltRounds: 5 });
-				ctx.params.password = password;
+				const hashed = await ctx.call("crypto.hash", { data: ctx.params.password, saltRounds: 5 });
+				ctx.params.password = hashed;
 
 				//status is to control the account - locked, block, etc
-				ctx.params.status = "active";
+				ctx.params.status = Values.account.status.active;
 			}
 		},
 		after:{
