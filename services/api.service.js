@@ -30,6 +30,7 @@ module.exports = {
 
 				whitelist: [
 					"$node.*",
+					"common.*",
 					"auth.login",
 					"auth.passwordChange",
 					"issues.*",

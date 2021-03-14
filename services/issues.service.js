@@ -33,7 +33,6 @@ module.exports = {
 			"why",
 			"how",
 			"location",
-			"state",
 			"province",
 			"city",
 			"township",

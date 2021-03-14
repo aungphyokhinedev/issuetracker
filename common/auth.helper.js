@@ -1,4 +1,6 @@
 const ApiGateway = require("moleculer-web");
+const Values = require("./values");
+
 module.exports = {
 
 		async canEdit(ctx, ownerOnly) {
@@ -6,8 +8,8 @@ module.exports = {
 
             if(ctx.meta.account) {
                 if(!ownerOnly) {
-                    if(ctx.meta.account.role === "super-admin") return;
-                    if(ctx.meta.account.role === "admin") return;
+                    if(ctx.meta.account.role === Values.role.super) return;
+                    if(ctx.meta.account.role === Values.role.admin) return;
                 }
                 
                 const issue = await ctx.call("issues.get", {id: ctx.params.id});
